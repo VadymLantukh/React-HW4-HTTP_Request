@@ -1,20 +1,18 @@
 import { Field, Form, Formik } from 'formik';
 
-const SearchBar = ({ handleSearch }) => {
+const SearchBar = ({ handleChangeQuary }) => {
   const handleSubmit = (values, options) => {
-    handleSearch(values.query);
+    handleChangeQuary(values.query);
     options.resetForm();
   };
 
   return (
     <header>
-      <Formik handleSubmit={handleSubmit} initialValues={{ query: '' }}>
+      <Formik onSubmit={handleSubmit} initialValues={{ query: '' }}>
         <Form>
           <Field
             type="text"
             name="query"
-            autocomplete="off"
-            autofocus
             placeholder="Search images and photos"
           />
           <button type="submit">Search</button>

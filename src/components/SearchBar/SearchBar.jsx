@@ -1,7 +1,14 @@
 import { Field, Form, Formik } from 'formik';
+import toast, { Toaster } from 'react-hot-toast';
+import { RiSearchEyeFill } from 'react-icons/ri';
 
 const SearchBar = ({ handleChangeQuary }) => {
   const handleSubmit = (values, options) => {
+    if (values.query.trim() === '') {
+      toast.error('Please enter the text!');
+      return;
+    }
+
     handleChangeQuary(values.query);
     options.resetForm();
   };
@@ -15,9 +22,15 @@ const SearchBar = ({ handleChangeQuary }) => {
             name="query"
             placeholder="Search images and photos"
           />
-          <button type="submit">Search</button>
+          <button type="submit">
+            {' '}
+            <RiSearchEyeFill />
+            Search
+          </button>
         </Form>
       </Formik>
+
+      <Toaster position="top-right" reverseOrder={false} />
     </header>
   );
 };

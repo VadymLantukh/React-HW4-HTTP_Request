@@ -6,11 +6,10 @@ export const fetchArticles = async (query, page) => {
     params: {
       client_id: '0zZLPuE0vkvpT6eDFrj12ezhL4GmM_vcJGIyTNSWdbQ',
       page,
-      query, 
+      query,
       orientation: 'landscape',
     },
   });
 
-  console.log(response.data.results);
-  return response.data.results;
+  return response.data;
 };

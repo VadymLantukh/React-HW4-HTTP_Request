@@ -1,0 +1,8 @@
+.boxErrorMessage {
+  text-align: center;
+  border: 2px solid rgb(230, 20, 20);
+  color: rgb(230, 20, 20);
+  margin: 0 auto;
+  width: 400px;
+  border-radius: 10px;
+}

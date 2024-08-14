@@ -11,6 +11,5 @@ export const fetchArticles = async (query, page) => {
     },
   });
 
-  console.log(response.data);
   return response.data;
 };

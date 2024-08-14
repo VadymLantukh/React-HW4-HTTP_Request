@@ -1,10 +1,14 @@
+import css from './ErrorMessage.module.css'
+
 const ErrorMessage = () => {
   return (
-    <p>
-      Oops! Were having issues.
-      <br />
-      Please refresh the page or try again later.
-    </p>
+    <div className={css.boxErrorMessage}>
+      <p>
+        Oops! Were having issues.
+        <br />
+        Please refresh the page or try again later.
+      </p>
+    </div>
   );
 };
 

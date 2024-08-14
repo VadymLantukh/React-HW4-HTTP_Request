@@ -64,7 +64,7 @@ function App() {
           setIsVisualButton(false);
         }
         setArticles(prev => [...prev, ...data.results]);
-        setIsLastPage(page < Math.ceil(data.total_pages / data.results.length));
+        setIsLastPage(page >= data.total_pages);
       } catch (error) {
         setIsError(true);
         throw new Error(error.status);
@@ -86,7 +86,7 @@ function App() {
       {articles.length > 0 &&
         !isLoadingMore &&
         isVisualButton &&
-        isLastPage && <LoadMoreBtn handleLoadMore={handleLoadMore} />}
+        !isLastPage && <LoadMoreBtn handleLoadMore={handleLoadMore} />}
       {isLoadingMore && <Loader />}
       <ImageModal
         openModal={openModal}

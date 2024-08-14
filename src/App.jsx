@@ -55,7 +55,7 @@ function App() {
         const data = await fetchArticles(query, page);
 
         if (data.results.length === 0) {
-          toast.error('No found image');
+          toast.error('No found images');
           return;
         }
 

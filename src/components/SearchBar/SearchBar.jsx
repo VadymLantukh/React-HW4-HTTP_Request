@@ -1,6 +1,7 @@
 import { Field, Form, Formik } from 'formik';
 import toast, { Toaster } from 'react-hot-toast';
 import { RiSearchEyeFill } from 'react-icons/ri';
+import css from './SearchBar.module.css';
 
 const SearchBar = ({ handleChangeQuary }) => {
   const handleSubmit = (values, options) => {
@@ -16,13 +17,14 @@ const SearchBar = ({ handleChangeQuary }) => {
   return (
     <header>
       <Formik onSubmit={handleSubmit} initialValues={{ query: '' }}>
-        <Form>
+        <Form className={css.boxForm}>
           <Field
+            className={css.fieldForm}
             type="text"
             name="query"
-            placeholder="Search images and photos"
+            placeholder="Search images..."
           />
-          <button type="submit">
+          <button type="submit" className={css.btnForm}>
             {' '}
             <RiSearchEyeFill />
             Search
@@ -30,7 +32,7 @@ const SearchBar = ({ handleChangeQuary }) => {
         </Form>
       </Formik>
 
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position="bottom-center" reverseOrder={false} />
     </header>
   );
 };

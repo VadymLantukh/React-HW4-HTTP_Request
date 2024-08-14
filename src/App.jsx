@@ -3,11 +3,11 @@ import SearchBar from './components/SearchBar/SearchBar';
 import { useEffect, useState } from 'react';
 import { fetchArticles } from './articles-api';
 import ImageGallery from './components/ImageGallery/ImageGallery';
-import { PropagateLoader } from 'react-spinners';
 import toast, { Toaster } from 'react-hot-toast';
 import ErrorMessage from './components/ErrorMessage/ErrorMessage';
 import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn';
 import { ImageModal } from './components/ImageModal/ImageModal';
+import Loader from './components/Loader/Loader';
 
 function App() {
   const [query, setQuery] = useState('');
@@ -18,9 +18,13 @@ function App() {
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [modalImage, setModalImage] = useState({});
+  const [isVisualButton, setIsVisualButton] = useState(true);
+  const [isLastPage, setIsLastPage] = useState(false);
 
   const handleChangeQuary = newQuery => {
+    setIsLastPage(false);
     setArticles([]);
+    setIsVisualButton(true);
     setQuery(newQuery);
     setPage(1);
   };
@@ -50,18 +54,20 @@ function App() {
         setIsError(false);
         const data = await fetchArticles(query, page);
 
-        if (data.length === 0) {
+        if (data.results.length === 0) {
           toast.error('No found image');
           return;
         }
 
-        if (data.total < 10) {
+        if (data.total <= data.results.length) {
           toast('There are no more pictures', { icon: '😞' });
+          setIsVisualButton(false);
         }
         setArticles(prev => [...prev, ...data.results]);
+        setIsLastPage(page < Math.ceil(data.total_pages / data.results.length));
       } catch (error) {
         setIsError(true);
-        console.log(error);
+        throw new Error(error.status);
       } finally {
         setIsLoader(false);
         setIsLoadingMore(false);
@@ -73,14 +79,15 @@ function App() {
   return (
     <>
       <SearchBar handleChangeQuary={handleChangeQuary} />
-      {isLoader && <PropagateLoader color="#ff0909" />}
+      {isLoader && <Loader />}
       {articles.length > 0 && (
         <ImageGallery articles={articles} handleOpenModal={handleOpenModal} />
       )}
-      {articles.length > 0 && !isLoadingMore && (
-        <LoadMoreBtn handleLoadMore={handleLoadMore} />
-      )}
-      {isLoadingMore && <PropagateLoader color="#ff0909" />}
+      {articles.length > 0 &&
+        !isLoadingMore &&
+        isVisualButton &&
+        isLastPage && <LoadMoreBtn handleLoadMore={handleLoadMore} />}
+      {isLoadingMore && <Loader />}
       <ImageModal
         openModal={openModal}
         closeModal={closeModal}
@@ -88,7 +95,7 @@ function App() {
         alt={modalImage.description}
       />
       {isError && <ErrorMessage />}
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position="bottom-center" reverseOrder={false} />
     </>
   );
 }

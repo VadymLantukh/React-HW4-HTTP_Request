@@ -1,5 +1,11 @@
 const ErrorMessage = () => {
-  return <p>Whoops, something went wrong! Please try reloading this page!</p>;
+  return (
+    <p>
+      Oops! Were having issues.
+      <br />
+      Please refresh the page or try again later.
+    </p>
+  );
 };
 
 export default ErrorMessage;

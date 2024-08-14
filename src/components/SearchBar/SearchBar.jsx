@@ -26,7 +26,7 @@ const SearchBar = ({ handleChangeQuary }) => {
           />
           <button type="submit" className={css.btnForm}>
             {' '}
-            <RiSearchEyeFill />
+            <RiSearchEyeFill className={css.iconBtn} />
             Search
           </button>
         </Form>
